@@ -15,7 +15,9 @@ const PDFList = () => {
   const fetchPDFs = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get("http://localhost:5000/api/pdfs");
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKDEND}/api/pdfs`,
+      );
       setPdfs(response.data);
     } catch (error) {
       console.error("Error fetching PDFs:", error);
@@ -37,7 +39,7 @@ const PDFList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/pdfs/${id}`);
+      await axios.delete(`${process.env.REACT_APP_BACKDEND}/api/pdfs/${id}`);
       setPdfs(pdfs.filter((pdf) => pdf._id !== id));
     } catch (error) {
       console.error("Error deleting PDF:", error);

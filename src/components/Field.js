@@ -1,11 +1,5 @@
 import React from "react";
 import ResizableField from "./ResizableField";
-import {
-  FaFont,
-  FaCheckSquare,
-  FaDotCircle,
-  FaCaretDown,
-} from "react-icons/fa";
 
 const Field = ({
   field,

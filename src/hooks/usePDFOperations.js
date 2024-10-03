@@ -78,11 +78,11 @@ const usePDFOperations = () => {
       try {
         setIsLoading(true);
         const infoResponse = await axios.get(
-          `http://localhost:5000/api/pdfs/${id}/info`,
+          `${process.env.REACT_APP_BACKDEND}/api/pdfs/${id}/info`,
         );
         const pdfInfo = infoResponse.data;
         const pdfResponse = await axios.get(
-          `http://localhost:5000/api/pdfs/${id}`,
+          `${process.env.REACT_APP_BACKDEND}/api/pdfs/${id}`,
           {
             responseType: "arraybuffer",
           },
@@ -351,7 +351,7 @@ const usePDFOperations = () => {
           formData.append("id", id);
         }
         const uploadResponse = await fetch(
-          "http://localhost:5000/api/pdfs/upload",
+          `${process.env.REACT_APP_BACKDEND}/api/pdfs/upload`,
           {
             method: "POST",
             body: formData,
@@ -385,7 +385,7 @@ const usePDFOperations = () => {
         );
 
         const saveResponse = await fetch(
-          `http://localhost:5000/api/pdfs/${pdfId}/fields`,
+          `${process.env.REACT_APP_BACKDEND}/api/pdfs/${pdfId}/fields`,
           {
             method: "POST",
             headers: {
