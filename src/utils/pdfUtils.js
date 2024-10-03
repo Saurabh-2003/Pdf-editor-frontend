@@ -135,23 +135,35 @@ export const renderPage = async (
   setPdfDimensions,
 ) => {
   const page = await pdf.getPage(pageNumber);
-  const viewport = page.getViewport({ scale: 1.5 });
+  const viewport = page.getViewport({ scale: 1 });
 
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
 
-  canvas.height = viewport.height;
-  canvas.width = viewport.width;
+  const containerWidth =
+    document.querySelector(".pdf-container")?.clientWidth || viewport.width;
+  const scale = containerWidth / viewport.width;
 
-  setPdfDimensions({ width: viewport.width, height: viewport.height });
+  const scaledViewport = page.getViewport({ scale });
+
+  canvas.height = scaledViewport.height;
+  canvas.width = scaledViewport.width;
 
   await page.render({
     canvasContext: context,
-    viewport: viewport,
+    viewport: scaledViewport,
   }).promise;
 
   setPageCanvases((prev) => ({
     ...prev,
     [pageNumber]: canvas,
   }));
+
+  const dimensions = {
+    width: scaledViewport.width,
+    height: scaledViewport.height,
+  };
+  setPdfDimensions(dimensions);
+
+  return { scale, dimensions };
 };

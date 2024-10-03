@@ -39,7 +39,7 @@ const PDFViewer = ({
         ref={pdfContainerRef}
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
-        className="relative bg-white rounded-lg shadow-md overflow-hidden"
+        className="relative bg-white shadow-md border-2 overflow-hidden"
       >
         {pageCanvases[currentPage] && (
           <img

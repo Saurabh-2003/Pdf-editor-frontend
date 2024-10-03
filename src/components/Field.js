@@ -1,5 +1,11 @@
 import React from "react";
 import ResizableField from "./ResizableField";
+import {
+  FaFont,
+  FaCheckSquare,
+  FaDotCircle,
+  FaCaretDown,
+} from "react-icons/fa";
 
 const Field = ({
   field,
@@ -34,8 +40,9 @@ const Field = ({
                 content: e.target.value,
               })
             }
-            className="w-full h-full box-border bg-transparent border-none p-1 resize-none"
+            className="w-full h-full box-border bg-transparent border-none p-2 resize-none focus:outline-none"
             style={{ fontSize: `${fontSize}px` }}
+            placeholder="Enter text here..."
           />
         );
       case "checkbox":
@@ -51,18 +58,19 @@ const Field = ({
                   checked: e.target.checked,
                 })
               }
-              className="mr-1 flex-shrink-0"
+              className="mr-2 flex-shrink-0 cursor-pointer"
               style={{ width: `${iconSize}px`, height: `${iconSize}px` }}
             />
             <input
               type="text"
               value={field.label || ""}
               onChange={handleLabelChange}
-              className="flex-grow bg-transparent border-none p-1 w-0 min-w-0"
+              className="flex-grow bg-transparent border-none p-1 w-0 min-w-0 focus:outline-none"
               style={{
                 fontSize: `${fontSize}px`,
-                width: `calc(100% - ${iconSize + 5}px)`,
+                width: `calc(100% - ${iconSize + 10}px)`,
               }}
+              placeholder={`Enter ${field.type} label...`}
             />
           </div>
         );
@@ -75,7 +83,7 @@ const Field = ({
                 selectedOption: e.target.value,
               })
             }
-            className="w-full h-full box-border bg-transparent border-none p-1"
+            className="w-full h-full box-border bg-transparent border-none p-1 cursor-pointer appearance-none focus:outline-none"
             style={{ fontSize: `${fontSize}px` }}
           >
             <option value="">Select an option</option>
@@ -98,8 +106,8 @@ const Field = ({
       onMove={handleFieldMove}
       onDelete={handleDelete}
     >
-      <div className="relative w-full h-full bg-transparent overflow-hidden">
-        {fieldContent()}
+      <div className="relative w-full h-full bg-white overflow-hidden rounded shadow-sm border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+        <div>{fieldContent()}</div>
       </div>
     </ResizableField>
   );

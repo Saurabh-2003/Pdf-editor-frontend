@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef } from "react";
+import { FaGripLines, FaTimes, FaExpandArrowsAlt } from "react-icons/fa";
 
 const ResizableField = ({ field, onResize, onMove, onDelete, children }) => {
   const [isResizing, setIsResizing] = useState(false);
@@ -28,8 +29,8 @@ const ResizableField = ({ field, onResize, onMove, onDelete, children }) => {
         const deltaX = e.clientX - startPos.x;
         const deltaY = e.clientY - startPos.y;
         onResize(field.id, {
-          width: Math.max(50, field.width + deltaX),
-          height: Math.max(30, field.height + deltaY),
+          width: Math.max(150, field.width + deltaX),
+          height: Math.max(40, field.height + deltaY),
         });
         setStartPos({ x: e.clientX, y: e.clientY });
       } else if (isMoving) {
@@ -71,25 +72,34 @@ const ResizableField = ({ field, onResize, onMove, onDelete, children }) => {
         width: `${field.width}px`,
         height: `${field.height}px`,
       }}
-      className="border border-gray-300 bg-white"
+      className="group"
     >
-      <div
-        className="absolute top-0 left-0 right-0 h-6 bg-gray-200 cursor-move flex items-center justify-between px-2 text-xs"
-        onMouseDown={handleDragStart}
-      >
-        <span>⋮⋮</span>
-        <button
-          className="bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center"
-          onClick={() => onDelete(field.id)}
+      <div className="absolute -top-8 left-0 right-0 h-8 bg-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-between px-2 rounded-t-md">
+        <div
+          className="cursor-move flex items-center"
+          onMouseDown={handleDragStart}
         >
-          X
+          <FaGripLines className="mr-2 text-gray-200" />
+          <span className="text-sm text-gray-200">{field.type}</span>
+        </div>
+        <button
+          className="text-gray-200 hover:text-red-500 transition-colors duration-200"
+          onClick={() => onDelete(field.id)}
+          title="Delete field"
+        >
+          <FaTimes />
         </button>
       </div>
-      <div className="mt-6 h-[calc(100%-24px)]">{children}</div>
+      <div className="w-full h-full bg-white border border-gray-300 rounded-md overflow-hidden">
+        {children}
+      </div>
       <div
-        className="absolute right-0 bottom-0 w-4 h-4 bg-gray-400 cursor-nwse-resize"
+        className="absolute right-0 bottom-0 w-4 h-4 flex items-center justify-center cursor-nwse-resize text-gray-400 hover:text-blue-500 transition-colors duration-200"
         onMouseDown={handleResizeStart}
-      />
+        title="Resize field"
+      >
+        <FaExpandArrowsAlt size={10} />
+      </div>
     </div>
   );
 };
